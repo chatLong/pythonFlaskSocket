@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Title of the document</title>
+  <link rel="stylesheet" href="../static/styles/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          // Fonction pour rafraîchir le tableau toutes les 2 seconde
+          setInterval(function() {
+              $.getJSON('/getClients', function(clients) {
+                  // Supprimer le contenu actuel du tableau
+                  $('#table-body').empty();
+                  // Ajouter chaque élément de la liste renvoyée par Flask à la table
+                  $.each(clients, function(index, element) {
+                      $('#table-body').append('<tr><td>' + element[0] + '</td><td>' + element[1] + '</td><td>' + element[2] + '</td><td>' + element[3] + '</td><td><form id="" method="get" action="/webcam"><button id="webcamButton">webcam</button></form></td></tr>');
+                  });
+              });
+          }, 2000);
+      });
+  </script>
+  </head>
+
+  <body>
+    <br/>
+    <h1>Python Flask socket server</h1>
+
+    <form id="btnStart" method="post" action="/startServer">
+      <button id="startButton">start</button>
+    </form>
+    
+    <form id="btnStop" method="post" action="/stopServer">
+      <button id="stopButton">stop</button>
+    </form>
+    <br/>
+    <br/>
+    {% block table %} {% endblock %}
+    <br/>
+    {% block webcam %} {% endblock %}
+  </body>
+</html>

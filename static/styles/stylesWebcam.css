@@ -1,0 +1,7 @@
+body{
+    background-color: gray;
+}
+#webcamDisplay{
+    height: 500px;
+    width: 600px;
+}
